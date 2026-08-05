@@ -1,0 +1,21 @@
+{
+  "name": "@vibe-studio/dashboard-tokens",
+  "version": "0.1.0",
+  "description": "Canonical shadcn/ui + dashboard semantic CSS tokens shared by PD and JF (and future dashboard-style apps).",
+  "type": "module",
+  "exports": {
+    "./dashboard-tokens.css": "./dashboard-tokens.css",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dashboard-tokens.css",
+    "README.md"
+  ],
+  "license": "UNLICENSED",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tarascloud/vs-public",
+    "directory": "packages/dashboard-tokens"
+  }
+}

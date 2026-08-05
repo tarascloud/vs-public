@@ -1,0 +1,48 @@
+/* ==========================================================================
+   DARK THEME — default surface/text bindings
+   --------------------------------------------------------------------------
+   Activated by `.dark`, `[data-theme="dark"]`, or media `prefers-color-scheme`.
+   VS itself is dark-only (see brands/vs.css), so VS apps `.dark` always.
+   ========================================================================== */
+
+.dark,
+[data-theme="dark"],
+:root[class~="dark"] {
+  --vs-bg:         var(--vs-core-zinc-950);
+  --vs-bg-subtle:  var(--vs-core-zinc-900);
+  --vs-card-bg:    var(--vs-core-zinc-900);
+  --vs-elevated:   var(--vs-core-zinc-800);
+
+  --vs-text:           var(--vs-core-zinc-50);
+  --vs-text-secondary: var(--vs-core-zinc-200);
+  --vs-text-muted:     var(--vs-core-zinc-400);
+
+  --vs-border:        var(--vs-core-zinc-800);
+  --vs-border-subtle: rgba(255, 255, 255, 0.06);
+
+  /* brighter brand accent for dark contrast */
+  --vs-primary:        var(--vs-core-indigo-400);
+  --vs-primary-hover:  var(--vs-core-indigo-300);
+  --vs-primary-active: var(--vs-core-indigo-500);
+
+  --vs-success: var(--vs-core-green-400);
+  --vs-warning: var(--vs-core-amber-400);
+  --vs-error:   var(--vs-core-red-400);
+  --vs-info:    var(--vs-core-blue-400);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not(.light):not([data-theme="light"]) {
+    --vs-bg:         var(--vs-core-zinc-950);
+    --vs-bg-subtle:  var(--vs-core-zinc-900);
+    --vs-card-bg:    var(--vs-core-zinc-900);
+    --vs-elevated:   var(--vs-core-zinc-800);
+
+    --vs-text:           var(--vs-core-zinc-50);
+    --vs-text-secondary: var(--vs-core-zinc-200);
+    --vs-text-muted:     var(--vs-core-zinc-400);
+
+    --vs-border:        var(--vs-core-zinc-800);
+    --vs-border-subtle: rgba(255, 255, 255, 0.06);
+  }
+}

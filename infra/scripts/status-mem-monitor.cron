@@ -1,0 +1,5 @@
+# DEV-20260601-0021: 14-day status service memory observation post-fix.
+# Logs RSS every 15min; alerts via Telegram if >600MiB.
+# Install: crontab -e, add this line:
+# */15 * * * * /opt/docker/scripts/status-mem-monitor.sh >> /dev/null 2>&1
+*/15 * * * * /opt/docker/scripts/status-mem-monitor.sh >> /dev/null 2>&1

@@ -1,0 +1,103 @@
+# MemPalace Quality Evaluation — 10 baseline queries
+# mp_t12 — 2026-04-10
+# Format: id, query, expected_sources (list of source_file values), expected_keywords
+# Updated mp_t12b: improved query formulations for better recall
+
+- id: q01
+  query: "Garmin 429 rate limit backoff sync помилка виправлення"
+  expected_sources: [claude-code, vs-tasks]
+  expected_keywords: [garmin, 429, backoff, sync, rate]
+
+- id: q02
+  query: "MemPalace wing room hall ChromaDB архітектура palace структура"
+  expected_sources: [vs-tasks, vs-initiatives, claude-code]
+  expected_keywords: [wing, room, hall, chroma, palace]
+
+- id: q03
+  query: "Docker pg pgbouncer redis VPS сервер контейнери інфраструктура"
+  expected_sources: [claude-code, vs-tasks, vs-updates]
+  expected_keywords: [docker, pg, redis, container, vps]
+
+- id: q04
+  query: "PD Personal Dashboard Monobank bunq транзакції фінанси sync"
+  expected_sources: [pd-chat, claude-code, vs-tasks]
+  expected_keywords: [monobank, bunq, transaction, finance, pd]
+
+- id: q05
+  query: "XSS dangerouslySetInnerHTML auth endpoint security захист bearer"
+  expected_sources: [claude-code, vs-tasks, vs-initiatives]
+  expected_keywords: [xss, auth, security, endpoint, bearer]
+
+- id: q06
+  query: "AI chat assistant Groq ollama PD відповіді модель"
+  expected_sources: [pd-chat, vs-tasks]
+  expected_keywords: [groq, ollama, assistant, chat]
+
+- id: q07
+  query: "Telegram bot yourbot команди повідомлення сесія"
+  expected_sources: [telegram-yourbot, claude-code]
+  expected_keywords: [telegram, bot, command]
+
+- id: q08
+  query: "PostgreSQL backup pg_dump відновлення бази даних процедура"
+  expected_sources: [claude-code, vs-tasks]
+  expected_keywords: [backup, pg_dump, postgres, restore]
+
+- id: q09
+  query: "passkeys WebAuthn Google OAuth NextAuth authentication авторизація"
+  expected_sources: [pd-chat, claude-code, vs-tasks]
+  expected_keywords: [auth, oauth, passkey, nextauth]
+
+- id: q10
+  query: "Cloudflare tunnel деплой git release branch push prod"
+  expected_sources: [claude-code, vs-tasks, vs-updates]
+  expected_keywords: [cloudflare, tunnel, deploy, release, git]
+
+# ── Fresh queries (AI-20260601-0006) — target recent decisions/incidents ──
+# These detect freshness regression: if MemPalace corpus is stale (ingest stall),
+# these queries return older context or no results, even if the static recall@5
+# eval against q01-q10 stays unchanged.
+
+- id: q11
+  query: "CSP unsafe-inline Next.js hydration sh.example.com 24h prod down 2026-04-18"
+  expected_sources: [claude-code, vs-tasks, vs-feedback]
+  expected_keywords: [csp, nonce, unsafe-inline, hydration, next]
+
+- id: q12
+  query: "MemPalace pgvector reranker cross-encoder recall@5 baseline 83.3% 2026-05-11"
+  expected_sources: [vs-tasks, claude-code]
+  expected_keywords: [pgvector, reranker, recall, baseline, eval]
+
+- id: q13
+  query: "Status error_logs ingestion gap status_reader password compose .env 2026-06-01"
+  expected_sources: [vs-tasks, claude-code]
+  expected_keywords: [status, error_logs, status_reader, compose, password]
+
+# ── REV22-052: wing_agents + June 2026 freshness queries ──────────────────────
+# These target agent wiki content (wing_agents) and recent June 2026 decisions.
+# Recall failure here means wing_agents ingest or recent ingestion is stale.
+
+- id: q14
+  query: "agent wiki Karpathy pattern log.md MANDATORY task completion DEV-20260507"
+  expected_sources: [agent-wiki, claude-code]
+  expected_keywords: [wiki, log.md, mandatory, karpathy, agent]
+
+- id: q15
+  query: "devsecops freqtrade decommission 2026-06-16 контейнер видалено pd-dev"
+  expected_sources: [vs-tasks, claude-code, agent-wiki]
+  expected_keywords: [freqtrade, decommission, pd-dev, container]
+
+- id: q16
+  query: "MemPalace pgvector PostgreSQL ChromaDB міграція 2026-04-11 drawers"
+  expected_sources: [vs-tasks, claude-code, agent-wiki]
+  expected_keywords: [pgvector, postgresql, chroma, migration, drawers]
+
+- id: q17
+  query: "developer agent XSS dangerouslySetInnerHTML sanitize security правило повторне"
+  expected_sources: [agent-wiki, vs-tasks]
+  expected_keywords: [xss, dangerouslysetinnerhtml, sanitize, security, agent]
+
+- id: q18
+  query: "Shuleansky session відео аудіо транскрипт diarize sh-worker NAS mount 2026"
+  expected_sources: [agent-wiki, claude-code, vs-tasks]
+  expected_keywords: [shuleansky, transcript, diarize, nas, worker]

@@ -1,0 +1,174 @@
+# MemPalace DrawerMetadata — canonical field reference
+# MP-ARCH-FUTURE-05
+#
+# Source of truth: db/metadata.py (DrawerMetadata Pydantic model).
+# This file is documentation only — not runtime-enforced.
+#
+# Enforcement policy:
+#   extra="allow" — unknown keys log a WARNING but are NOT rejected.
+#   Required fields (source_type, embedding_model) are validated at ingest time.
+#   Missing required fields produce a WARNING (compat mode) until all ingesters
+#   are updated, after which the warning may be escalated to an error.
+#
+# Format: field_name: {type, required, description, used_by}
+
+fields:
+
+  # ── Core (required) ──────────────────────────────────────────────────────
+  source_type:
+    type: string (enum)
+    required: true
+    values: [claude_session, pd_chat, vs_task, vs_webhook, decision, transcript, convo, wiki, nightly, unknown]
+    description: Origin category of the content
+    used_by: all ingesters
+
+  embedding_model:
+    type: string
+    required: true
+    example: "nomic-embed-text"
+    description: Model used to produce the embedding vector
+    used_by: all ingesters (_add_chunked in ingest_server.py)
+
+  # ── Versioning ────────────────────────────────────────────────────────────
+  ingester_version:
+    type: string
+    required: false
+    example: "2.0.0"
+    description: Semver of the ingester that produced this row
+    used_by: future ingesters
+
+  # ── Source provenance ─────────────────────────────────────────────────────
+  raw_source_uri:
+    type: string
+    required: false
+    description: Original URI of the content (file path, URL, DB row ref)
+    used_by: wiki ingester (MP-WIKI-IMPL-04)
+
+  git_sha:
+    type: string
+    required: false
+    description: Git commit SHA associated with the content
+    used_by: vs_task, vs_webhook ingesters
+
+  # ── Session / chat IDs ────────────────────────────────────────────────────
+  session_id:
+    type: string
+    required: false
+    description: Claude session ID (for claude_session source_type)
+    used_by: ingest_claude_sessions.py
+
+  pd_chat_id:
+    type: string
+    required: false
+    description: PD chat message ID (for pd_chat source_type)
+    used_by: ingest_pd_chat.py
+
+  # ── Agent context ─────────────────────────────────────────────────────────
+  agent_name:
+    type: string
+    required: false
+    description: Agent that produced/ingested the content
+    used_by: all ingesters (added_by column covers this too)
+
+  # ── Conversation / transcript ─────────────────────────────────────────────
+  hall:
+    type: string
+    required: false
+    description: Hall identifier within the palace room
+    used_by: /ingest/convo, /ingest/decision
+
+  participants:
+    type: list[string]
+    required: false
+    description: Participants in a conversation
+    used_by: /ingest/convo
+
+  speakers:
+    type: list[string]
+    required: false
+    description: Speakers in a transcript
+    used_by: /ingest/transcript
+
+  # ── Decision ──────────────────────────────────────────────────────────────
+  type:
+    type: string
+    required: false
+    values: [decision, transcript]
+    description: Content sub-type
+    used_by: /ingest/decision, /ingest/transcript
+
+  title:
+    type: string
+    required: false
+    description: Title for decision records
+    used_by: /ingest/decision
+
+  # ── VS task / webhook ─────────────────────────────────────────────────────
+  ticketId:
+    type: string
+    required: false
+    description: Human-readable ticket identifier (e.g. MP-ARCH-FUTURE-05)
+    used_by: /ingest/vs-webhook, ingest_vs_db.py
+
+  status:
+    type: string
+    required: false
+    description: VS task status at time of ingest
+    used_by: /ingest/vs-webhook
+
+  initiativeId:
+    type: string
+    required: false
+    description: VS Initiative UUID owning the task
+    used_by: /ingest/vs-webhook
+
+  commitHash:
+    type: string
+    required: false
+    description: Git commit hash from task completion note
+    used_by: /ingest/vs-webhook
+
+  verificationStatus:
+    type: string
+    required: false
+    description: Agent verification result status
+    used_by: /ingest/vs-webhook
+
+  routed_room:
+    type: string
+    required: false
+    description: Room chosen by _route_task_to_room() heuristic
+    used_by: /ingest/vs-webhook
+
+  via:
+    type: string
+    required: false
+    values: [webhook, nightly]
+    description: How this VS task row was ingested
+    used_by: /ingest/vs-webhook, ingest_vs_db.py
+
+  # ── Legacy / migration ────────────────────────────────────────────────────
+  legacy_chroma_id:
+    type: string
+    required: false
+    description: Original ChromaDB document ID (migration provenance)
+    used_by: chroma→pg migration script
+
+  migrated_at:
+    type: string (ISO datetime)
+    required: false
+    description: Timestamp of migration from ChromaDB
+    used_by: chroma→pg migration script
+
+  migrated_from:
+    type: string
+    required: false
+    description: Source system for migrated rows
+    used_by: chroma→pg migration script
+
+  # ── Wiki (added by MP-WIKI-IMPL-04) ──────────────────────────────────────
+  wiki_section:
+    type: string
+    required: false
+    description: Heading/section path within the wiki document
+    used_by: wiki ingester (MP-WIKI-IMPL-04) — see db/wiki_metadata.py

@@ -1,0 +1,123 @@
+/* ==========================================================================
+   CORE TOKENS — primitives (raw colors, font names, spacing px)
+   No theming, no semantics. These are the LEAF values.
+   --------------------------------------------------------------------------
+   Naming: --vs-core-<category>-<scale>
+   Mirrors Tailwind palette where applicable so devs can reason about steps.
+   ========================================================================== */
+
+:root {
+  /* ── Brand primaries (from each project's master palette) ── */
+  --vs-core-indigo-300: #a5b4fc;
+  --vs-core-indigo-400: #818cf8;
+  --vs-core-indigo-500: #6366f1;   /* VS master */
+  --vs-core-indigo-600: #4f46e5;
+
+  --vs-core-blue-400: #60a5fa;
+  --vs-core-blue-500: #3b82f6;
+  --vs-core-blue-600: #2563eb;     /* PD/JF master */
+
+  --vs-core-emerald-400: #4ade80;
+  --vs-core-emerald-500: #3ec98a;
+  --vs-core-emerald-700: #237d54;  /* SH master */
+
+  --vs-core-gold-400: #f1cb4e;     /* VS sun accent */
+  --vs-core-gold-500: #d4a853;     /* SH amber accent */
+
+  --vs-core-zinc-50:  #fafafa;
+  --vs-core-zinc-100: #f5f5f5;
+  --vs-core-zinc-200: #e4e4e7;
+  --vs-core-zinc-400: #a1a1aa;
+  --vs-core-zinc-500: #71717a;
+  --vs-core-zinc-700: #3f3f46;
+  --vs-core-zinc-800: #27272a;
+  --vs-core-zinc-900: #18181b;     /* VS card bg */
+  --vs-core-zinc-950: #09090b;     /* VS page bg */
+
+  --vs-core-slate-50:  #f8fafc;
+  --vs-core-slate-100: #f1f5f9;
+  --vs-core-slate-200: #e2e8f0;
+  --vs-core-slate-300: #cbd5e1;
+  --vs-core-slate-400: #94a3b8;
+  --vs-core-slate-500: #5f6f84;
+  --vs-core-slate-700: #334155;
+  --vs-core-slate-800: #1e293b;
+  --vs-core-slate-900: #0f172a;
+  --vs-core-slate-950: #0a0f1a;
+
+  --vs-core-black: #000000;
+  --vs-core-white: #ffffff;
+
+  /* ── Status primitives ── */
+  --vs-core-green-400:  #4ade80;
+  --vs-core-green-600:  #16a34a;
+  --vs-core-amber-400:  #fbbf24;
+  --vs-core-amber-600:  #d97706;
+  --vs-core-red-400:    #f87171;
+  --vs-core-red-600:    #dc2626;
+
+  /* ── Spacing scale (4px grid) ── */
+  --vs-space-0:  0;
+  --vs-space-1:  0.25rem;   /*  4px */
+  --vs-space-2:  0.5rem;    /*  8px */
+  --vs-space-3:  0.75rem;   /* 12px */
+  --vs-space-4:  1rem;      /* 16px */
+  --vs-space-5:  1.25rem;   /* 20px */
+  --vs-space-6:  1.5rem;    /* 24px */
+  --vs-space-8:  2rem;      /* 32px */
+  --vs-space-10: 2.5rem;    /* 40px */
+  --vs-space-12: 3rem;      /* 48px */
+  --vs-space-16: 4rem;      /* 64px */
+
+  /* ── Radius scale ── */
+  --vs-radius-xs:   0.25rem;   /*  4px */
+  --vs-radius-sm:   0.375rem;  /*  6px */
+  --vs-radius-md:   0.5rem;    /*  8px */
+  --vs-radius-lg:   0.75rem;   /* 12px */
+  --vs-radius-xl:   1rem;      /* 16px */
+  --vs-radius-2xl:  1.5rem;    /* 24px */
+  --vs-radius-full: 9999px;
+
+  /* ── Typography sizes (modular 1.25) ── */
+  --vs-font-xs:    0.75rem;
+  --vs-font-sm:    0.875rem;
+  --vs-font-base:  1rem;
+  --vs-font-lg:    1.125rem;
+  --vs-font-xl:    1.25rem;
+  --vs-font-2xl:   1.5rem;
+  --vs-font-3xl:   1.875rem;
+  --vs-font-4xl:   2.25rem;
+  --vs-font-5xl:   3rem;
+  --vs-font-6xl:   3.75rem;
+
+  /* ── Line heights ── */
+  --vs-lh-tight:   1.2;
+  --vs-lh-snug:    1.35;
+  --vs-lh-normal:  1.55;
+  --vs-lh-relaxed: 1.7;
+
+  /* ── Font family stacks (raw — semantic.css maps them) ── */
+  --vs-font-stack-inter:    "Inter", ui-sans-serif, system-ui, sans-serif;
+  --vs-font-stack-geist:    "Geist", ui-sans-serif, system-ui, sans-serif;
+  --vs-font-stack-playfair: "Playfair Display", ui-serif, Georgia, serif;
+  --vs-font-stack-mono:     ui-monospace, "JetBrains Mono", "SF Mono", Menlo, monospace;
+
+  /* ── Transitions ── */
+  --vs-transition-fast:  150ms ease;
+  --vs-transition-base:  250ms ease;
+  --vs-transition-slow:  400ms ease;
+
+  /* ── Z-index scale ── */
+  --vs-z-base:     0;
+  --vs-z-dropdown: 10;
+  --vs-z-sticky:   20;
+  --vs-z-modal:    50;
+  --vs-z-toast:    100;
+
+  /* ── Shadow primitives ── */
+  --vs-shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --vs-shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  --vs-shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --vs-shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --vs-shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+}

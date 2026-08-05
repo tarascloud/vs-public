@@ -1,0 +1,31 @@
+/* ==========================================================================
+   BRAND: VS (Vibe Studio) — dark-only, indigo master
+   --------------------------------------------------------------------------
+   Apply at the html/body level (e.g. `<html data-brand="vs" class="dark">`).
+   VS has no light mode — defaults force dark zinc.
+   ========================================================================== */
+
+[data-brand="vs"],
+.theme-vs {
+  --vs-bg:         var(--vs-core-zinc-950);
+  --vs-bg-subtle:  #111113;
+  --vs-card-bg:    var(--vs-core-zinc-900);
+  --vs-elevated:   var(--vs-core-zinc-800);
+
+  --vs-text:           #ededed;
+  --vs-text-secondary: var(--vs-core-zinc-200);
+  --vs-text-muted:     #888888;
+
+  --vs-border:        var(--vs-core-zinc-800);
+  --vs-border-subtle: #1f1f23;
+
+  --vs-primary:        var(--vs-core-indigo-500);
+  --vs-primary-hover:  var(--vs-core-indigo-400);
+  --vs-primary-active: var(--vs-core-indigo-600);
+
+  --vs-accent-sun: var(--vs-core-gold-400);   /* sun in logo */
+
+  --vs-font-display: var(--vs-font-stack-inter);
+  --vs-font-body:    var(--vs-font-stack-inter);
+  --vs-font-mono:    "JetBrains Mono", "Fira Code", "Cascadia Code", ui-monospace, monospace;
+}

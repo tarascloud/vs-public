@@ -1,0 +1,33 @@
+# Add these targets to /opt/docker/Makefile (after the existing deploy-% target):
+
+# ── Zero-downtime rolling deploys (DEV-20260507-0021) ──────────────────────────
+# Uses infra/scripts/rolling-deploy.sh (symlinked to /opt/docker/scripts/)
+# Falls back to force-recreate if service is not running or rolling deploy fails.
+
+deploy-pd:
+	bash /opt/docker/scripts/rolling-deploy.sh pd-prod
+
+deploy-jf:
+	bash /opt/docker/scripts/rolling-deploy.sh jobfinder
+
+deploy-ko:
+	bash /opt/docker/scripts/rolling-deploy.sh korobkov
+
+deploy-sh:
+	bash /opt/docker/scripts/rolling-deploy.sh sh
+
+deploy-bp:
+	bash /opt/docker/scripts/rolling-deploy.sh bp
+
+deploy-vs:
+	bash /opt/docker/scripts/rolling-deploy.sh vs-landing
+
+deploy-tatiana:
+	bash /opt/docker/scripts/rolling-deploy.sh tatiana
+
+deploy-owner:
+	bash /opt/docker/scripts/rolling-deploy.sh owner
+
+# Dry-run any service
+deploy-dry-%:
+	bash /opt/docker/scripts/rolling-deploy.sh --dry-run $*

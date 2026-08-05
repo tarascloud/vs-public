@@ -1,0 +1,47 @@
+/* ==========================================================================
+   SEMANTIC TOKENS — meaning over value
+   --------------------------------------------------------------------------
+   Map core primitives to roles. Consumers use these (--vs-bg, --vs-primary)
+   instead of raw core tokens. Brand skins re-bind these.
+
+   Naming: --vs-<role>[-<state>]
+   Defaults below are theme-agnostic anchors; light.css and dark.css
+   override the bg/text/border layer based on color scheme.
+   ========================================================================== */
+
+:root {
+  /* ── Typography roles ── */
+  --vs-font-body:    var(--vs-font-stack-inter);
+  --vs-font-display: var(--vs-font-stack-inter);
+  --vs-font-mono:    var(--vs-font-stack-mono);
+  --vs-font-serif:   var(--vs-font-stack-playfair);
+
+  /* ── Brand accent (master = VS indigo) ── */
+  --vs-primary:        var(--vs-core-indigo-500);
+  --vs-primary-hover:  var(--vs-core-indigo-400);
+  --vs-primary-active: var(--vs-core-indigo-600);
+  --vs-primary-fg:     var(--vs-core-white);
+
+  /* ── Status semantics ── */
+  --vs-success:    var(--vs-core-green-600);
+  --vs-success-fg: var(--vs-core-white);
+  --vs-warning:    var(--vs-core-amber-600);
+  --vs-warning-fg: var(--vs-core-zinc-950);
+  --vs-error:      var(--vs-core-red-600);
+  --vs-error-fg:   var(--vs-core-white);
+  --vs-info:       var(--vs-core-blue-600);
+  --vs-info-fg:    var(--vs-core-white);
+
+  /* ── Focus ring ── */
+  --vs-ring: 0 0 0 3px rgb(99 102 241 / 0.5);
+
+  /* ── Step aliases (for spacing) ── */
+  --vs-step-1: var(--vs-space-1);
+  --vs-step-2: var(--vs-space-2);
+  --vs-step-3: var(--vs-space-3);
+  --vs-step-4: var(--vs-space-4);
+  --vs-step-6: var(--vs-space-6);
+  --vs-step-8: var(--vs-space-8);
+  --vs-step-12: var(--vs-space-12);
+  --vs-step-16: var(--vs-space-16);
+}

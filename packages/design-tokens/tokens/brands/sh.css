@@ -1,0 +1,52 @@
+/* ==========================================================================
+   BRAND: SH (Shuleansky) — warm ivory + emerald primary
+   --------------------------------------------------------------------------
+   SH uses Geist for UI but Playfair for display headings (coaching brand).
+   Shares the emerald+gold family base with KO and Tatiana.
+   ========================================================================== */
+
+@import "./_emerald-gold-base.css";
+
+[data-brand="sh"],
+.theme-sh {
+  --vs-bg:         #f6f5f0;
+  --vs-bg-subtle:  #edeae2;
+  --vs-card-bg:    #fdfcfa;
+  --vs-elevated:   #fdfcfa;
+
+  --vs-text:           #1a1a14;
+  --vs-text-secondary: #3d3d30;
+  --vs-text-muted:     #6b6155;
+
+  --vs-border:        #ddd7cc;
+  --vs-border-subtle: #edeae2;
+
+  --vs-primary:        var(--brand-emerald);
+  --vs-primary-hover:  var(--brand-emerald-light);
+  --vs-primary-active: var(--brand-emerald-deep);
+
+  --vs-accent-warm:    var(--brand-gold);  /* SH amber accent */
+
+  --vs-font-body:    var(--vs-font-stack-geist);
+  --vs-font-display: var(--vs-font-stack-playfair);
+  --vs-font-serif:   var(--vs-font-stack-playfair);
+}
+
+.dark[data-brand="sh"],
+.dark .theme-sh {
+  --vs-bg:         #0c100e;
+  --vs-bg-subtle:  #1a201c;
+  --vs-card-bg:    #151b17;
+  --vs-elevated:   #1a201c;
+
+  --vs-text:           #e8ece9;
+  --vs-text-secondary: #b8c8be;
+  --vs-text-muted:     #8a9a90;
+
+  --vs-border:        rgba(255, 255, 255, 0.09);
+  --vs-border-subtle: rgba(255, 255, 255, 0.05);
+
+  --vs-primary:        var(--brand-emerald-light);
+  --vs-primary-hover:  var(--brand-emerald-light);
+  --vs-primary-active: var(--brand-emerald);
+}

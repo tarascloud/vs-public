@@ -1,0 +1,59 @@
+/* ==========================================================================
+   BRAND: KO (Korobkov Art Studio) — monochrome gallery brand
+   --------------------------------------------------------------------------
+   KO intentionally diverges from VS indigo: pure black/white as gallery
+   identity. See `.claude/rules/css-tokens-sync.md` § "KO --accent exception".
+   Display font: Playfair (gallery feel); body: Inter.
+   Imports the emerald+gold family base (used as decorative accent only,
+   never as --vs-primary — KO primary stays monochrome black/white).
+   ========================================================================== */
+
+@import "./_emerald-gold-base.css";
+
+[data-brand="ko"],
+.theme-ko {
+  --vs-bg:         var(--vs-core-white);
+  --vs-bg-subtle:  #f5f5f0;
+  --vs-card-bg:    var(--vs-core-white);
+  --vs-elevated:   var(--vs-core-white);
+
+  --vs-text:           #1a1a1a;
+  --vs-text-secondary: #3a3a3a;
+  --vs-text-muted:     #6a6a6a;
+
+  --vs-border:        #e5e5e0;
+  --vs-border-subtle: #f0f0eb;
+
+  /* KO primary == high-contrast black button */
+  --vs-primary:        var(--vs-core-black);
+  --vs-primary-hover:  #1a1a1a;
+  --vs-primary-active: var(--vs-core-black);
+  --vs-primary-fg:     #fafafa;
+
+  /* Decorative accents only (series tags, gallery badges). Not for primary CTA. */
+  --vs-accent-warm:    var(--brand-gold);
+
+  --vs-font-body:    var(--vs-font-stack-inter);
+  --vs-font-display: var(--vs-font-stack-playfair);
+  --vs-font-serif:   var(--vs-font-stack-playfair);
+}
+
+.dark[data-brand="ko"],
+.dark .theme-ko {
+  --vs-bg:         #0a0a0a;
+  --vs-bg-subtle:  #141414;
+  --vs-card-bg:    #141414;
+  --vs-elevated:   #1a1a1a;
+
+  --vs-text:           #fafafa;
+  --vs-text-secondary: #d4d4d4;
+  --vs-text-muted:     #888888;
+
+  --vs-border:        #2a2a2a;
+  --vs-border-subtle: rgba(255, 255, 255, 0.06);
+
+  --vs-primary:        var(--vs-core-white);
+  --vs-primary-hover:  #f0f0f0;
+  --vs-primary-active: var(--vs-core-white);
+  --vs-primary-fg:     #0a0a0a;
+}

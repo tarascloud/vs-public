@@ -1,0 +1,18 @@
+/* ==========================================================================
+   BRAND: BP (Bilchaka Prodavaka) — earthy/warm
+   --------------------------------------------------------------------------
+   Keeps the warm palette (terracotta + olive) while inheriting VS spacing
+   and typography scale.
+   ========================================================================== */
+
+[data-brand="bp"],
+.theme-bp {
+  --vs-primary:        #b85c38;       /* terracotta */
+  --vs-primary-hover:  #a04a2c;
+  --vs-primary-active: #8a3e25;
+
+  --vs-accent-warm: #d4a853;          /* olive/gold */
+
+  --vs-font-body:    var(--vs-font-stack-inter);
+  --vs-font-display: var(--vs-font-stack-inter);
+}

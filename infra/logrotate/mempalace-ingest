@@ -1,0 +1,26 @@
+# MemPalace nightly-ingest log rotation
+#
+# Path is the host bind-mount dir exposed into the mempalace container
+# (/opt/docker/mempalace/ingest-logs). The /stats/ingest-runs endpoint
+# parses this log; the container reads both the live file and the most
+# recent rotated .1.gz, so a simple numbered rotation (no dateext) is used.
+#
+# copytruncate: the cron writer keeps the file open via shell append
+# redirection — a rename-based rotate would leave the fd on the rotated
+# file. copytruncate blanks the live file in place; the ingest_server.py
+# parser reads .1.gz as a fallback to cover the post-rotation empty window.
+#
+# Install:
+#   sudo cp infra/logrotate/mempalace-ingest /etc/logrotate.d/mempalace-ingest
+#   sudo logrotate -d /etc/logrotate.d/mempalace-ingest   # dry-run
+#
+# Trigger: system-wide daily timer (logrotate.timer / cron.daily on Ubuntu).
+
+/opt/docker/mempalace/ingest-logs/mempalace-ingest.log {
+    daily
+    rotate 30
+    compress
+    missingok
+    notifempty
+    copytruncate
+}

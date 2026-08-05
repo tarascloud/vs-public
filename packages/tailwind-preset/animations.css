@@ -1,0 +1,166 @@
+/* ==========================================================================
+   @vibe-studio/tailwind-preset — Shared Animations & Utilities
+   Version: 1.0.0
+
+   Import in your globals.css:
+     @import "@vibe-studio/tailwind-preset/animations.css";
+
+   This file provides:
+   - Shared @keyframes used across VS, PD, JF, SH
+   - CSS-variable-driven `animate-in` utility (custom plugin)
+   - Stagger delay helpers
+   - Reduced-motion safety
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   CSS Custom Properties for animate-in
+   Override these per-element to customize animation behavior.
+   -------------------------------------------------------------------------- */
+:root {
+  --animate-in-duration: 0.2s;
+  --animate-in-easing: ease-out;
+  --animate-in-y: 4px;
+  --animate-in-scale: 1;
+  --animate-in-delay: 0s;
+}
+
+/* --------------------------------------------------------------------------
+   Shared @keyframes
+   -------------------------------------------------------------------------- */
+
+/* fadeIn — lightweight page/component entrance (VS, PD, JF) */
+@keyframes tc-fade-in {
+  from { opacity: 0; transform: translateY(var(--animate-in-y, 4px)); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* slideUp — card/section entrance with more travel (PD, JF, SH) */
+@keyframes tc-slide-up {
+  from { opacity: 0; transform: translateY(var(--animate-in-y, 8px)); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* slideDown — dropdown/popover reveal */
+@keyframes tc-slide-down {
+  from { opacity: 0; transform: translateY(calc(var(--animate-in-y, 8px) * -1)); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* scaleIn — success checkmark, icon pop (SH, PD) */
+@keyframes tc-scale-in {
+  0%   { transform: scale(0); opacity: 0; }
+  60%  { transform: scale(1.15); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* subtlePulse — processing/loading state (SH, PD) */
+@keyframes tc-subtle-pulse {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.6; }
+}
+
+/* expand — accordion open (SH) */
+@keyframes tc-expand {
+  from { opacity: 0; max-height: 0; }
+  to   { opacity: 1; max-height: 500px; }
+}
+
+/* collapse — accordion close (SH) */
+@keyframes tc-collapse {
+  from { opacity: 1; max-height: 500px; }
+  to   { opacity: 0; max-height: 0; }
+}
+
+/* --------------------------------------------------------------------------
+   animate-in — CSS-variable-driven entrance animation (custom plugin)
+
+   Usage:
+     <div class="animate-in">                        — default fadeIn
+     <div class="animate-in" style="--animate-in-y: 12px;">  — custom travel
+     <div class="animate-in" style="--animate-in-duration: 0.4s; --animate-in-delay: 0.1s;">
+
+   This replaces per-project `.animate-page-in`, `.page-animate`, `.stagger-item`
+   with a single composable utility.
+   -------------------------------------------------------------------------- */
+.animate-in {
+  animation: tc-fade-in var(--animate-in-duration) var(--animate-in-easing) var(--animate-in-delay) both;
+}
+
+.animate-slide-up {
+  --animate-in-y: 8px;
+  animation: tc-slide-up var(--animate-in-duration, 0.3s) var(--animate-in-easing) var(--animate-in-delay, 0s) both;
+}
+
+.animate-slide-down {
+  --animate-in-y: 8px;
+  animation: tc-slide-down var(--animate-in-duration, 0.3s) var(--animate-in-easing) var(--animate-in-delay, 0s) both;
+}
+
+.animate-scale-in {
+  animation: tc-scale-in 0.4s ease var(--animate-in-delay, 0s) both;
+}
+
+.animate-subtle-pulse {
+  animation: tc-subtle-pulse 2s ease-in-out infinite;
+}
+
+.animate-expand {
+  animation: tc-expand 0.25s ease-out both;
+  overflow: hidden;
+}
+
+.animate-collapse {
+  animation: tc-collapse 0.2s ease-in forwards;
+  overflow: hidden;
+}
+
+/* --------------------------------------------------------------------------
+   Stagger Delay Utilities
+
+   Usage:
+     <div class="animate-in stagger-1">
+     <div class="animate-in stagger-2">
+   -------------------------------------------------------------------------- */
+.stagger-1  { --animate-in-delay: 0.04s; }
+.stagger-2  { --animate-in-delay: 0.08s; }
+.stagger-3  { --animate-in-delay: 0.12s; }
+.stagger-4  { --animate-in-delay: 0.16s; }
+.stagger-5  { --animate-in-delay: 0.20s; }
+.stagger-6  { --animate-in-delay: 0.24s; }
+.stagger-7  { --animate-in-delay: 0.28s; }
+.stagger-8  { --animate-in-delay: 0.32s; }
+.stagger-9  { --animate-in-delay: 0.36s; }
+.stagger-10 { --animate-in-delay: 0.40s; }
+
+/* --------------------------------------------------------------------------
+   text-balance — Custom utility plugin
+
+   Applies `text-wrap: balance` for better headline wrapping.
+   Usage: <h1 class="text-balance">Long heading text</h1>
+   -------------------------------------------------------------------------- */
+.text-balance {
+  text-wrap: balance;
+}
+
+.text-pretty {
+  text-wrap: pretty;
+}
+
+/* --------------------------------------------------------------------------
+   Reduced Motion — Safety net
+
+   All animations in this file respect user preferences.
+   Projects should also include their own prefers-reduced-motion rules
+   for project-specific animations.
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .animate-in,
+  .animate-slide-up,
+  .animate-slide-down,
+  .animate-scale-in,
+  .animate-subtle-pulse,
+  .animate-expand,
+  .animate-collapse {
+    animation: none !important;
+  }
+}

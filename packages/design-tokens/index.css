@@ -1,0 +1,17 @@
+/* ==========================================================================
+   @vibe-studio/design-tokens — Umbrella entry
+   --------------------------------------------------------------------------
+   Loading order matters: core → semantic → light/dark → brand skin.
+
+   For a vanilla project:
+     @import "@vibe-studio/design-tokens";
+
+   For a brand-specific app:
+     @import "@vibe-studio/design-tokens";
+     @import "@vibe-studio/design-tokens/tokens/brands/ko.css";
+   ========================================================================== */
+
+@import "./tokens/core.css";
+@import "./tokens/semantic.css";
+@import "./tokens/light.css";
+@import "./tokens/dark.css";

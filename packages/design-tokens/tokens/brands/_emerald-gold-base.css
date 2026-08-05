@@ -1,0 +1,26 @@
+/* ==========================================================================
+   SHARED BRAND BASE: Emerald + Gold family (Tatiana, KO, SH)
+   --------------------------------------------------------------------------
+   Common ground for editorial/gallery/coaching brands that share the
+   emerald + gold palette. Per-brand files import this and override only
+   what they need (e.g., bg, text, primary mapping).
+
+   Usage in a brand file:
+     @import "./_emerald-gold-base.css";
+     [data-brand="<brand>"], .theme-<brand> {
+       --vs-primary: var(--brand-emerald);
+       ...
+     }
+
+   See `.claude/rules/css-tokens-sync.md` for sync rules.
+   ========================================================================== */
+
+:root {
+  --brand-emerald:       #237d54;  /* KO/SH primary */
+  --brand-emerald-light: #3a8a6a;  /* Tatiana accent */
+  --brand-emerald-deep:  #1c6444;
+
+  --brand-gold:          #d4a853;  /* KO/SH accent */
+  --brand-gold-light:    #c4a05a;  /* Tatiana gold */
+  --brand-gold-deep:     #b08842;
+}

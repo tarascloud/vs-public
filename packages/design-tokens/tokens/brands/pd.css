@@ -1,0 +1,23 @@
+/* ==========================================================================
+   BRAND: PD (Personal Dashboard) — blue master, dual-mode
+   --------------------------------------------------------------------------
+   PD inherits the default light/dark layer from index.css. This brand file
+   only re-binds primary to PD blue.
+   ========================================================================== */
+
+[data-brand="pd"],
+.theme-pd {
+  --vs-primary:        var(--vs-core-blue-600);
+  --vs-primary-hover:  var(--vs-core-blue-500);
+  --vs-primary-active: var(--vs-core-blue-600);
+
+  --vs-font-body:    var(--vs-font-stack-inter);
+  --vs-font-display: var(--vs-font-stack-inter);
+}
+
+.dark[data-brand="pd"],
+.dark .theme-pd {
+  --vs-primary:        var(--vs-core-blue-500);
+  --vs-primary-hover:  var(--vs-core-blue-400);
+  --vs-primary-active: var(--vs-core-blue-600);
+}

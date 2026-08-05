@@ -1,0 +1,32 @@
+# MemPalace audit.log rotation
+# MP-IMPROVE-20260411-11 (initial), REV-20260419-0054 (dateext added)
+#
+# Path is the host bind-mount of /data/palace/audit.log inside the mempalace
+# container. Writer is a Python process with an open fd + fsync per line,
+# so we must use copytruncate (a simple rotate would leave the fd pointing at
+# the rotated file until container restart).
+#
+# `dateext` + `dateformat -%Y%m%d` means rotated files are named
+# audit.log-YYYYMMDD.gz instead of audit.log.1.gz — retention scripts + NAS
+# offsite sync can glob by date without parsing numbered rotations.
+# See: services/mempalace/docs/mempalace-logs.md (REV-20260419-0054).
+#
+# Install:
+#   sudo cp infra/logrotate/mempalace /etc/logrotate.d/mempalace
+#   sudo logrotate -d /etc/logrotate.d/mempalace   # dry-run
+#   sudo logrotate -f /etc/logrotate.d/mempalace   # force rotate now
+#
+# Trigger: system-wide daily timer (/etc/cron.daily/logrotate on Ubuntu).
+
+/opt/docker/mempalace/palace/audit.log {
+    daily
+    dateext
+    dateformat -%Y%m%d
+    rotate 30
+    compress
+    delaycompress
+    missingok
+    notifempty
+    copytruncate
+    create 0600 1000 1000
+}

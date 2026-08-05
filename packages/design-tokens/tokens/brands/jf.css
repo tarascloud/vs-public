@@ -1,0 +1,24 @@
+/* ==========================================================================
+   BRAND: JF (JobFinder) — blue master, Geist font, dual-mode
+   --------------------------------------------------------------------------
+   Same accent palette as PD (intentional, dashboard family). Distinct
+   typography (Geist sans/mono — developer aesthetic kept).
+   ========================================================================== */
+
+[data-brand="jf"],
+.theme-jf {
+  --vs-primary:        var(--vs-core-blue-600);
+  --vs-primary-hover:  var(--vs-core-blue-500);
+  --vs-primary-active: var(--vs-core-blue-600);
+
+  --vs-font-body:    var(--vs-font-stack-geist);
+  --vs-font-display: var(--vs-font-stack-geist);
+  --vs-font-mono:    "Geist Mono", ui-monospace, "SF Mono", Menlo, monospace;
+}
+
+.dark[data-brand="jf"],
+.dark .theme-jf {
+  --vs-primary:        var(--vs-core-blue-500);
+  --vs-primary-hover:  var(--vs-core-blue-400);
+  --vs-primary-active: var(--vs-core-blue-600);
+}

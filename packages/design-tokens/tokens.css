@@ -1,0 +1,158 @@
+/* ==========================================================================
+   @vibe-studio/design-tokens — tokens.css (CANON, single file)
+   --------------------------------------------------------------------------
+   Canonical semantic token sheet for all Vibe Studio projects
+   (PD, JF, SH, KO, VS, BP). Naming follows the shadcn/Tailwind-4 scheme
+   already used by PD/JF/SH — PD globals.css is the value canon
+   (.claude/rules/css-tokens-sync.md).
+
+   Consumption (current mechanism: COPY-SYNC, see README.md):
+     - projects keep their own globals.css;
+     - this file is the reference the drift checker compares against:
+         bash scripts/design-tokens-sync.sh
+     - npm import becomes possible once cross-repo consumption is set up
+       (separate per-project migration tasks).
+
+   Status scheme decision (DES-20260610-0001): canonical = UNION of the two
+   schemes found in production:
+     --status-<kind>      accent color   (JF scheme: text/icons/dots)
+     --status-<kind>-bg   badge surface  (KO scheme)
+     --status-<kind>-fg   badge text     (KO scheme)
+   kinds: success | error | warning | info | progress | neutral.
+   Accent values come from JF (light/dark), bg/fg pairs come verbatim from
+   KO (the only production bg/fg implementation). Rationale in README.md.
+
+   Tailwind 4 note: derived radii are NOT declared here — projects derive
+   them in @theme inline exactly like the PD canon:
+     --radius-sm: calc(var(--radius) * 0.6);
+     --radius-md: calc(var(--radius) * 0.8);
+     --radius-lg: var(--radius);
+     --radius-xl: calc(var(--radius) * 1.4);
+   ========================================================================== */
+
+/* ── Light theme (default) — values: PD canon ── */
+:root {
+  /* Surfaces */
+  --background: #f8fafc;
+  --foreground: #0f172a;
+  --card: #ffffff;
+  --card-foreground: #0f172a;
+  --popover: #ffffff;
+  --popover-foreground: #0f172a;
+
+  /* Brand / action */
+  --primary: #2563eb;
+  --primary-foreground: #ffffff;
+  --secondary: #f1f5f9;
+  --secondary-foreground: #0f172a;
+  --muted: #f1f5f9;
+  --muted-foreground: #64748b;
+  --accent: #f1f5f9;
+  --accent-foreground: #0f172a;
+  --destructive: #dc2626;
+
+  /* Strokes / focus */
+  --border: #e2e8f0;
+  --input: #e2e8f0;
+  --ring: #2563eb;
+
+  /* Shape */
+  --radius: 0.625rem;
+
+  /* Status accents (JF scheme) */
+  --status-success: #16a34a;
+  --status-error: #dc2626;
+  --status-warning: #ca8a04;
+  --status-info: #2563eb;
+  --status-progress: #9333ea;
+  --status-neutral: #6b7280;
+
+  /* Status badge surfaces (KO scheme) */
+  --status-success-bg: #dcfce7;
+  --status-success-fg: #166534;
+  --status-error-bg: #fee2e2;
+  --status-error-fg: #991b1b;
+  --status-warning-bg: #fef9c3;
+  --status-warning-fg: #854d0e;
+  --status-info-bg: #dbeafe;
+  --status-info-fg: #1e40af;
+  --status-progress-bg: #f3e8ff;
+  --status-progress-fg: #6b21a8;
+  --status-neutral-bg: #eaeae8;
+  --status-neutral-fg: #3f3f3f;
+
+  /* Top-level status aliases (parallel to --destructive) */
+  --success: var(--status-success);
+  --warning: var(--status-warning);
+  --info: var(--status-info);
+
+  /* Spacing scale (4px base) */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+
+  /* Type scale (font sizes) */
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 1.875rem;
+}
+
+/* ── Dark theme — values: PD canon ── */
+.dark {
+  /* Surfaces */
+  --background: #0a0f1a;
+  --foreground: #f1f5f9;
+  --card: rgba(255, 255, 255, 0.04);
+  --card-foreground: #f1f5f9;
+  --popover: #1e293b;
+  --popover-foreground: #f1f5f9;
+
+  /* Brand / action */
+  --primary: #3b82f6;
+  --primary-foreground: #ffffff;
+  --secondary: rgba(255, 255, 255, 0.04);
+  --secondary-foreground: #f1f5f9;
+  --muted: rgba(255, 255, 255, 0.04);
+  --muted-foreground: #a1b0c4;
+  --accent: rgba(255, 255, 255, 0.04);
+  --accent-foreground: #f1f5f9;
+  --destructive: #f87171;
+
+  /* Strokes / focus */
+  --border: rgba(255, 255, 255, 0.09);
+  --input: rgba(255, 255, 255, 0.08);
+  --ring: #3b82f6;
+
+  /* Status accents (JF scheme) */
+  --status-success: #4ade80;
+  --status-error: #f87171;
+  --status-warning: #facc15;
+  --status-info: #60a5fa;
+  --status-progress: #c084fc;
+  --status-neutral: #9ca3af;
+
+  /* Status badge surfaces (KO scheme) */
+  --status-success-bg: rgba(20, 83, 45, 0.3);
+  --status-success-fg: #4ade80;
+  --status-error-bg: rgba(127, 29, 29, 0.3);
+  --status-error-fg: #f87171;
+  --status-warning-bg: rgba(113, 63, 18, 0.3);
+  --status-warning-fg: #facc15;
+  --status-info-bg: rgba(30, 58, 138, 0.3);
+  --status-info-fg: #60a5fa;
+  --status-progress-bg: rgba(88, 28, 135, 0.3);
+  --status-progress-fg: #c084fc;
+  --status-neutral-bg: rgba(38, 38, 38, 0.4);
+  --status-neutral-fg: #b8b8b8;
+}

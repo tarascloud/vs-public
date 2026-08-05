@@ -1,0 +1,69 @@
+import { prisma } from "@/lib/prisma"
+import { sendTelegramMessage } from "@/lib/telegram"
+
+// Wrapper: send a Telegram message and persist it as OUTGOING in DB
+export async function sendAndSave(chatId: string, text: string, options?: { replyMarkup?: object; parseMode?: string; replyToMessageId?: number }) {
+  const result = await sendTelegramMessage(chatId, text, options)
+  try {
+    await prisma.telegramMessage.create({
+      data: {
+        chatId,
+        direction: "OUTGOING",
+        text,
+        messageId: (result as { result?: { message_id?: number } })?.result?.message_id ?? null,
+      },
+    })
+  } catch (e) {
+    console.error("Failed to save outgoing telegram message:", e)
+  }
+  return result
+}
+
+export async function findUserByTelegramId(telegramId: string) {
+  return prisma.user.findFirst({
+    where: {
+      OR: [
+        { telegramId },
+        { telegramChatId: telegramId },
+      ],
+    },
+  })
+}
+
+export async function ensureChatIdSaved(chatId: string, userId: string) {
+  try {
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+      select: { telegramChatId: true },
+    })
+    if (!user?.telegramChatId) {
+      await prisma.user.update({
+        where: { id: userId },
+        data: { telegramChatId: chatId },
+      })
+    }
+  } catch (e) {
+    console.error("Failed to save telegramChatId:", e)
+  }
+}
+
+export async function transcribeAudio(
+  audioBuffer: Buffer
+): Promise<{ text: string; language?: string; duration?: number }> {
+  const STT_URL = process.env.STT_URL || "http://host.docker.internal:8030"
+  const res = await fetch(STT_URL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/octet-stream",
+      "Content-Length": String(audioBuffer.length),
+    },
+    body: new Uint8Array(audioBuffer),
+  })
+
+  if (!res.ok) {
+    const errorBody = await res.text()
+    throw new Error(`STT server error ${res.status}: ${errorBody}`)
+  }
+
+  return res.json()
+}

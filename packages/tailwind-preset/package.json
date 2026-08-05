@@ -1,0 +1,19 @@
+{
+  "name": "@vibe-studio/tailwind-preset",
+  "version": "1.0.0",
+  "description": "Shared Tailwind CSS 4 preset for the example.com ecosystem (VS, PD, JF, SH)",
+  "license": "MIT",
+  "type": "module",
+  "main": "index.ts",
+  "exports": {
+    ".": "./index.ts",
+    "./animations.css": "./animations.css"
+  },
+  "files": [
+    "index.ts",
+    "animations.css"
+  ],
+  "peerDependencies": {
+    "tailwindcss": "^4.0.0"
+  }
+}

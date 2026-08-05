@@ -1,0 +1,166 @@
+# Vibe Studio — minimal self-hosted stack.
+#
+# Brings up PostgreSQL (with pgvector), Redis, the Studio app and MemPalace.
+# Copy .env.example to .env and fill it in first.
+#
+#   docker compose up -d pg redis          # infra only, run the app with `npm run dev`
+#   docker compose up -d                   # everything
+#
+# The author's production stack adds Cloudflare Tunnel, Infisical, Ollama and a
+# monitoring service — see infra/ for those pieces.
+
+services:
+  pg:
+    image: pgvector/pgvector:pg16
+    container_name: vs-pg
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${PG_USER:-vs}
+      POSTGRES_PASSWORD: ${PG_PASSWORD:?set PG_PASSWORD in .env}
+      POSTGRES_DB: ${PG_DATABASE:-vs}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "127.0.0.1:5432:5432"
+    security_opt:
+      - no-new-privileges:true
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${PG_USER:-vs}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks: [backend]
+
+  redis:
+    image: redis:7-alpine
+    container_name: vs-redis
+    restart: unless-stopped
+    command: >
+      redis-server
+      --maxmemory 128mb
+      --maxmemory-policy allkeys-lru
+      --appendonly yes
+      --requirepass ${REDIS_PASSWORD:?set REDIS_PASSWORD in .env}
+    environment:
+      REDISCLI_AUTH: ${REDIS_PASSWORD}
+    volumes:
+      - redis-data:/data
+    security_opt:
+      - no-new-privileges:true
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks: [backend]
+
+  studio:
+    build:
+      # The Dockerfile copies both packages/ and app/, so the build context is
+      # the repository root, not ./app.
+      context: .
+      dockerfile: app/Dockerfile
+      args:
+        # Only needed so `prisma generate` runs during the build; not a live connection.
+        DATABASE_URL: ${DATABASE_URL}
+    image: vibe-studio:latest
+    container_name: vs-studio
+    restart: unless-stopped
+    depends_on:
+      pg: {condition: service_healthy}
+      redis: {condition: service_healthy}
+    env_file: [.env]
+    environment:
+      # The image runs from /app, and the agent loader resolves ../agents.
+      AGENTS_DIR: /agents
+      UPLOAD_DIR: /uploads
+      # Next.js standalone binds to $HOSTNAME, which Docker sets to the container
+      # name — that makes 127.0.0.1 unreachable and the healthcheck fail.
+      HOSTNAME: 0.0.0.0
+    ports:
+      - "127.0.0.1:8020:3000"
+    volumes:
+      # Agent prompts are read at runtime by /api/agents/seed and /api/agents/[id]/sync
+      - ./agents:/agents:ro
+      - uploads:/uploads
+    security_opt:
+      - no-new-privileges:true
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:3000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    networks: [backend]
+
+  # Embeddings for MemPalace. The default model is nomic-embed-text (768 dims);
+  # after the first start run:
+  #   docker compose --profile memory exec ollama ollama pull nomic-embed-text
+  ollama:
+    image: ollama/ollama:latest
+    container_name: vs-ollama
+    restart: unless-stopped
+    profiles: [memory]
+    volumes:
+      - ollama-models:/root/.ollama
+    ports:
+      - "127.0.0.1:11434:11434"
+    networks: [backend]
+
+  # The MemPalace image runs as uid 1000; a fresh named volume is owned by root,
+  # so the palace directory has to be chowned once before the service starts.
+  mempalace-init:
+    image: alpine:3.20
+    container_name: vs-mempalace-init
+    profiles: [memory]
+    command: sh -c "mkdir -p /data/palace /cache && chown -R 1000:1000 /data/palace /cache"
+    volumes:
+      - mempalace-data:/data/palace
+      - mempalace-cache:/cache
+
+  mempalace:
+    build: ./services/mempalace
+    image: mempalace:latest
+    container_name: mempalace          # init_palace.sh and the MCP config expect this exact name
+    restart: unless-stopped
+    profiles: [memory]          # docker compose --profile memory up -d
+    depends_on:
+      pg: {condition: service_healthy}
+      mempalace-init: {condition: service_completed_successfully}
+      ollama: {condition: service_started}
+    env_file: [.env]
+    environment:
+      MEMPALACE_RERANKER_ENABLED: "true"
+      MEMPALACE_RERANK_POOL: "50"
+    ports:
+      - "127.0.0.1:8031:8030"
+    volumes:
+      - mempalace-data:/data/palace
+      - mempalace-cache:/home/mempalace/.cache
+      # Bootstrap script is not baked into the image, and the rootfs is
+      # read-only, so `docker cp` cannot put it there — mount it instead.
+      - ./services/mempalace/init_palace.py:/app/init_palace.py:ro
+    read_only: true
+    tmpfs:
+      - /tmp:mode=1777,size=64m
+    security_opt:
+      - no-new-privileges:true
+    cap_drop: [ALL]
+    pids_limit: 256
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://127.0.0.1:8030/health',timeout=3).status==200 else 1)"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    networks: [backend]
+
+volumes:
+  ollama-models:
+  pgdata:
+  redis-data:
+  uploads:
+  mempalace-data:
+  mempalace-cache:
+
+networks:
+  backend:
+    driver: bridge

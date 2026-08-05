@@ -1,0 +1,23 @@
+/* ==========================================================================
+   LIGHT THEME — default surface/text bindings
+   --------------------------------------------------------------------------
+   These roles are re-bound by brand skins where the brand requires it
+   (e.g. KO uses pure black accent on light, SH uses warm cream).
+   ========================================================================== */
+
+:root {
+  --vs-bg:         var(--vs-core-slate-50);
+  --vs-bg-subtle:  var(--vs-core-slate-100);
+  --vs-card-bg:    var(--vs-core-white);
+  --vs-elevated:   var(--vs-core-white);
+
+  --vs-text:           var(--vs-core-slate-900);
+  --vs-text-secondary: var(--vs-core-slate-700);
+  --vs-text-muted:     var(--vs-core-slate-500);
+
+  --vs-border:        var(--vs-core-slate-200);
+  --vs-border-subtle: var(--vs-core-slate-100);
+
+  --vs-shadow-card:  var(--vs-shadow-sm);
+  --vs-shadow-hover: var(--vs-shadow-md);
+}

@@ -1,0 +1,36 @@
+{
+  "name": "@vibe-studio/design-tokens",
+  "version": "0.1.0",
+  "description": "Umbrella design tokens for the Vibe Studio ecosystem (VS, PD, JF, SH, KO, BP, Tatiana). Re-exports foundation tokens from @vs/shared-tokens and provides per-brand skins.",
+  "type": "module",
+  "exports": {
+    ".": "./index.css",
+    "./index.css": "./index.css",
+    "./tokens.css": "./tokens.css",
+    "./tokens/core.css": "./tokens/core.css",
+    "./tokens/semantic.css": "./tokens/semantic.css",
+    "./tokens/light.css": "./tokens/light.css",
+    "./tokens/dark.css": "./tokens/dark.css",
+    "./tokens/brands/vs.css": "./tokens/brands/vs.css",
+    "./tokens/brands/pd.css": "./tokens/brands/pd.css",
+    "./tokens/brands/jf.css": "./tokens/brands/jf.css",
+    "./tokens/brands/sh.css": "./tokens/brands/sh.css",
+    "./tokens/brands/ko.css": "./tokens/brands/ko.css",
+    "./tokens/brands/bp.css": "./tokens/brands/bp.css",
+    "./tokens/brands/tatiana.css": "./tokens/brands/tatiana.css",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "index.css",
+    "tokens.css",
+    "tokens/",
+    "README.md"
+  ],
+  "license": "UNLICENSED",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tarascloud/vs-public",
+    "directory": "packages/design-tokens"
+  }
+}

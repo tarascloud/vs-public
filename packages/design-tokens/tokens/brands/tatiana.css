@@ -1,0 +1,21 @@
+/* ==========================================================================
+   BRAND: Tatiana — personal page, editorial feel
+   --------------------------------------------------------------------------
+   Display font: Playfair (editorial). Body: Inter.
+   Shares the emerald+gold family base with KO and SH.
+   ========================================================================== */
+
+@import "./_emerald-gold-base.css";
+
+[data-brand="tatiana"],
+.theme-tatiana {
+  --vs-primary:        var(--brand-emerald-light);
+  --vs-primary-hover:  var(--brand-emerald);
+  --vs-primary-active: var(--brand-emerald-deep);
+
+  --vs-accent-warm:    var(--brand-gold-light);
+
+  --vs-font-body:    var(--vs-font-stack-inter);
+  --vs-font-display: var(--vs-font-stack-playfair);
+  --vs-font-serif:   var(--vs-font-stack-playfair);
+}

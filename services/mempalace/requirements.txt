@@ -1,0 +1,29 @@
+# MemPalace core (from PyPI)
+# Upstream package still uses Chroma internally for mcp_server reads.
+# TODO(MP-ARCH-C-06): shim upstream so chromadb dep can be dropped entirely.
+mempalace>=3.1.0
+
+# MemPalace transitive deps (pinned for reproducibility)
+chromadb>=0.5.0,<0.7
+pyyaml>=6.0,<7
+
+# FastAPI ingestion sidecar
+fastapi>=0.111.0,<0.113
+uvicorn[standard]>=0.29.0
+
+# MP-ARCH-C-03 storage layer: SQLAlchemy 2.0 + pgvector + psycopg3
+sqlalchemy>=2.0,<3
+psycopg[binary]>=3.1,<4
+pgvector>=0.2.5,<0.4
+
+# SSE bridge: stdio→HTTP proxy for LAN/Tailscale access
+# Used by mempalace-sse sidecar (see infra/docker-compose.yml)
+mcp-proxy>=0.11.0
+
+# Scrubber runtime deps (stdlib only, but listed for clarity)
+# pytest is dev-only — NOT included here
+
+# MP-C-08-RERANKER: CrossEncoder reranker for hybrid search top-N.
+# torch is installed from the PyTorch CPU-only index in the Dockerfile
+# (BEFORE this requirements.txt pass) to avoid pulling CUDA libs (~8GB).
+sentence-transformers>=3,<5

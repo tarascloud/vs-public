@@ -1,0 +1,206 @@
+/* ==========================================================================
+   Shared Design Tokens — Vibe Studio Ecosystem
+   Version: 1.0.0
+   Projects: VS, PD, JF, SH
+
+   Usage: @import "@vs/shared-tokens/tokens.css"; in globals.css
+   These tokens provide a unified foundation layer. Each project keeps
+   its own globals.css with project-specific overrides (skins, charts, etc.)
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   LIGHT MODE (default)
+   -------------------------------------------------------------------------- */
+:root {
+  /* ── Background Layers ── */
+  --bg-base: #f8fafc;             /* slate-50  — main page background */
+  --bg-subtle: #f1f5f9;           /* slate-100 — secondary/muted areas */
+  --bg-surface: #ffffff;           /* white     — cards, popovers, elevated surfaces */
+
+  /* ── Text Hierarchy ── */
+  --text-primary: #0f172a;         /* slate-900 — headings, primary content */
+  --text-secondary: #334155;       /* slate-700 — body text, descriptions */
+  --text-muted: #5f6f84;           /* slate-500 adjusted — captions, placeholders (>= 4.5:1 on all bg) */
+
+  /* ── Borders ── */
+  --border-default: #e2e8f0;       /* slate-200 — default dividers, card borders */
+  --border-subtle: #f1f5f9;        /* slate-100 — very subtle separators */
+
+  /* ── Semantic Status Colors ── */
+  --color-success: #16a34a;        /* green-600 — positive, confirmed, income */
+  --color-success-subtle: rgba(22, 163, 74, 0.1);
+  --color-warning: #d97706;        /* amber-600 — caution, pending */
+  --color-warning-subtle: rgba(217, 119, 6, 0.1);
+  --color-error: #dc2626;          /* red-600   — danger, destructive, expense */
+  --color-error-subtle: rgba(220, 38, 38, 0.1);
+  --color-info: #2563eb;           /* blue-600  — informational, links */
+  --color-info-subtle: rgba(37, 99, 235, 0.1);
+
+  /* ── Spacing Scale (4px grid) — REV-20260419-0013 ── */
+  --space-0: 0;
+  --space-1: 0.25rem;   /*  4px */
+  --space-2: 0.5rem;    /*  8px */
+  --space-3: 0.75rem;   /* 12px */
+  --space-4: 1rem;      /* 16px */
+  --space-5: 1.25rem;   /* 20px */
+  --space-6: 1.5rem;    /* 24px */
+  --space-8: 2rem;      /* 32px */
+  --space-10: 2.5rem;   /* 40px */
+  --space-12: 3rem;     /* 48px */
+  --space-16: 4rem;     /* 64px */
+
+  /* ── Border Radius Scale — REV-20260419-0019 (BP-style) ── */
+  --radius-xs: 0.25rem;   /*  4px — extra small elements */
+  --radius-sm: 0.375rem;  /*  6px — chips, tags */
+  --radius-md: 0.5rem;    /*  8px — buttons, inputs */
+  --radius-lg: 0.75rem;   /* 12px — cards, dialogs */
+  --radius-xl: 1rem;      /* 16px — large containers */
+  --radius-2xl: 1.5rem;   /* 24px — hero cards, modals */
+  --radius-full: 9999px;  /* pills, avatars */
+
+  /* ── Typography Scale — REV-20260419-0022 (modular 1.25) ── */
+  --font-xs: 0.75rem;     /* 12px */
+  --font-sm: 0.875rem;    /* 14px */
+  --font-base: 1rem;      /* 16px */
+  --font-lg: 1.125rem;    /* 18px */
+  --font-xl: 1.25rem;     /* 20px */
+  --font-2xl: 1.5rem;     /* 24px */
+  --font-3xl: 1.875rem;   /* 30px */
+  --font-4xl: 2.25rem;    /* 36px */
+  --font-5xl: 3rem;       /* 48px */
+  --font-6xl: 3.75rem;    /* 60px */
+
+  /* ── Line Heights ── */
+  --lh-tight: 1.2;
+  --lh-snug: 1.35;
+  --lh-normal: 1.55;
+  --lh-relaxed: 1.7;
+
+  /* ── Font Families — REV-20260419-0023 ── */
+  --font-sans: ui-sans-serif, system-ui, "Inter", sans-serif;
+  --font-serif: ui-serif, Georgia, "Playfair Display", serif;
+  --font-mono: ui-monospace, "JetBrains Mono", monospace;
+
+  /* ── Shadows — REV-20260419-0027 ── */
+  --shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  --shadow-focus: 0 0 0 3px rgb(99 102 241 / 0.5);
+
+  /* ── Transitions ── */
+  --transition-fast: 150ms ease;
+  --transition-base: 250ms ease;
+  --transition-slow: 400ms ease;
+
+  /* ── Z-Index Scale ── */
+  --z-base: 0;
+  --z-dropdown: 10;
+  --z-sticky: 20;
+  --z-modal: 50;
+  --z-toast: 100;
+
+  /* ── Per-Project Accent Colors ── */
+  --accent-vs: #6366f1;            /* indigo-500 — Vibe Studio */
+  --accent-vs-hover: #818cf8;      /* indigo-400 */
+  --accent-pd: #2563eb;            /* blue-600   — Personal Dashboard */
+  --accent-pd-hover: #3b82f6;      /* blue-500 */
+  --accent-jf: #2563eb;            /* blue-600   — JobFinder (same family as PD) */
+  --accent-jf-hover: #3b82f6;      /* blue-500 */
+  --accent-sh: #237d54;            /* emerald    — Shuleansky */
+  --accent-sh-hover: #16a34a;      /* green-600 */
+}
+
+/* --------------------------------------------------------------------------
+   DARK MODE
+   -------------------------------------------------------------------------- */
+.dark,
+:root[class~="dark"],
+:root[data-theme="dark"] {
+  /* ── Background Layers ── */
+  --bg-base: #0a0f1a;             /* deep navy — main page background */
+  --bg-subtle: #111827;            /* gray-900 — secondary areas */
+  --bg-surface: #1e293b;           /* slate-800 — cards, popovers */
+
+  /* ── Text Hierarchy ── */
+  --text-primary: #f1f5f9;         /* slate-100 — headings, primary content */
+  --text-secondary: #cbd5e1;       /* slate-300 — body text, descriptions */
+  --text-muted: #94a3b8;           /* slate-400 — captions, placeholders */
+
+  /* ── Borders ── */
+  --border-default: rgba(255, 255, 255, 0.09);  /* subtle white border */
+  --border-subtle: rgba(255, 255, 255, 0.05);   /* barely visible separator */
+
+  /* ── Semantic Status Colors (brighter for dark bg) ── */
+  --color-success: #4ade80;        /* green-400 */
+  --color-success-subtle: rgba(74, 222, 128, 0.1);
+  --color-warning: #fbbf24;        /* amber-400 */
+  --color-warning-subtle: rgba(251, 191, 36, 0.1);
+  --color-error: #f87171;          /* red-400 */
+  --color-error-subtle: rgba(248, 113, 113, 0.1);
+  --color-info: #60a5fa;           /* blue-400 */
+  --color-info-subtle: rgba(96, 165, 250, 0.1);
+
+  /* ── Per-Project Accent Colors (brighter for dark bg) ── */
+  --accent-vs: #818cf8;            /* indigo-400 */
+  --accent-vs-hover: #a5b4fc;      /* indigo-300 */
+  --accent-pd: #3b82f6;            /* blue-500 */
+  --accent-pd-hover: #60a5fa;      /* blue-400 */
+  --accent-jf: #3b82f6;            /* blue-500 */
+  --accent-jf-hover: #60a5fa;      /* blue-400 */
+  --accent-sh: #3ec98a;            /* custom emerald */
+  --accent-sh-hover: #4ade80;      /* green-400 */
+}
+
+/* --------------------------------------------------------------------------
+   VS DARK-ONLY OVERRIDE
+   VS uses a permanent dark theme (no light mode). Apply these when
+   consuming tokens inside vs-private.
+   -------------------------------------------------------------------------- */
+[data-project="vs"],
+.theme-vs {
+  --bg-base: #09090b;             /* zinc-950 */
+  --bg-subtle: #111113;            /* slightly elevated */
+  --bg-surface: #18181b;           /* zinc-900 */
+
+  --text-primary: #fafafa;         /* zinc-50 */
+  --text-secondary: #e4e4e7;       /* zinc-200 */
+  --text-muted: #a1a1aa;           /* zinc-400 */
+
+  --border-default: #27272a;       /* zinc-800 */
+  --border-subtle: #1f1f23;        /* slightly lighter than bg-surface */
+}
+
+/* --------------------------------------------------------------------------
+   SH (Shuleansky) LIGHT OVERRIDE
+   SH uses a warm palette rather than cool slate.
+   -------------------------------------------------------------------------- */
+[data-project="sh"],
+.theme-sh {
+  --bg-base: #f6f5f0;
+  --bg-subtle: #edeae2;
+  --bg-surface: #fdfcfa;
+
+  --text-primary: #1a1a14;
+  --text-secondary: #3d3d30;
+  --text-muted: #6b6155;
+
+  --border-default: #ddd7cc;
+  --border-subtle: #edeae2;
+}
+
+/* SH dark override */
+.dark[data-project="sh"],
+.dark .theme-sh {
+  --bg-base: #0c100e;
+  --bg-subtle: #1a201c;
+  --bg-surface: #151b17;
+
+  --text-primary: #e8ece9;
+  --text-secondary: #b8c8be;
+  --text-muted: #8a9a90;
+
+  --border-default: rgba(255, 255, 255, 0.09);
+  --border-subtle: rgba(255, 255, 255, 0.05);
+}
