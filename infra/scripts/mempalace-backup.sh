@@ -4,7 +4,7 @@ set -euo pipefail
 # MemPalace backup script v2 — unified pg_dump + ingest-state (MP-MONO-06)
 # Runs daily at 04:00 UTC (after PG backup at 03:00)
 # Backups: /opt/docker/backups/mempalace_YYYYMMDD_HHMMSS.tar.gz.age
-# Retention: 30 days on-host, 90 days on NAS
+# Retention: 7 days on-host, 90 days on NAS
 #
 # Content after pgvector migration (MP-ARCH-C-05/C-07):
 # - pg_dump of mempalace database (wings, rooms, drawers + embeddings, kg_entities, kg_triples)
@@ -20,7 +20,7 @@ NAS_USER="terminal-user"
 NAS_HOST="10.0.0.20"
 NAS_BACKUP_DIR="/volume1/Backups/mempalace"
 LOG_FILE="/opt/docker/backups/mempalace-backup.log"
-KEEP_LOCAL_DAYS=30
+KEEP_LOCAL_DAYS=7
 KEEP_NAS_DAYS=90
 MAX_SIZE_MB=200
 

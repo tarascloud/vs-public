@@ -65,9 +65,9 @@ api = g['api']
 tasks = g['tasks']
 
 # Map project slug to local path
+# sh/shuleansky dropped 2026-09-02: project decommissioned, repo archived on
+# GitHub and moved to /opt/repos/vibe-studio/!archive/sh-private.
 project_paths = {
-    'sh': '/opt/repos/vibe-studio/sh-private',
-    'shuleansky': '/opt/repos/vibe-studio/sh-private',
     'pd': '/opt/repos/vibe-studio/pd-private',
     'jf': '/opt/repos/vibe-studio/jf-private',
     'vs': '/opt/repos/vibe-studio',

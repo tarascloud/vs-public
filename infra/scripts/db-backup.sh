@@ -10,21 +10,22 @@ set -euo pipefail
 
 BACKUP_DIR="/opt/docker/backups"
 TIMESTAMP=$(date +%Y%m%d_%H%M%S)
-KEEP_DAYS=30
+KEEP_DAYS=7
 
 mkdir -p "$BACKUP_DIR"
 
 # Map: database_name -> pg_user
+# 2026-09-02: sh, korobkov, bp_prod and bp_dev dropped — those projects are
+# decommissioned, their repos archived on GitHub and moved to !archive/. The
+# databases stay in pg and their existing dumps stay on the NAS; we just stop
+# taking new ones. Re-add here (and in the status backup monitor) if a project
+# is ever revived.
 declare -A DB_USERS=(
   [pd_prod]="pd"
   [pd_dev]="pd"
   [jobfinder]="jobfinder"
   [vs]="vs"
   [infisical]="infisical"
-  [sh]="sh"
-  [korobkov]="korobkov"
-  [bp_prod]="bp"
-  [bp_dev]="bp"
   [status]="status_reader"
   [date]="date"
 )
@@ -32,7 +33,7 @@ declare -A DB_USERS=(
 SUCCESS=0
 FAILED=0
 
-for DB in pd_prod pd_dev jobfinder vs infisical sh korobkov bp_prod bp_dev status date; do
+for DB in pd_prod pd_dev jobfinder vs infisical status date; do
   USER="${DB_USERS[$DB]}"
   FILE="${BACKUP_DIR}/${DB}_backup_${TIMESTAMP}.sql.gz"
 
@@ -51,7 +52,7 @@ done
 # Backup date uploads docker volume (tar archive, retention 14 days)
 # NOTE: the real volume is docker_date_uploads (compose project prefix), NOT date_uploads.
 # Using the wrong name silently creates an empty volume and produces an 86-byte tar (DEV-20260610-0029).
-DATE_UPLOADS_KEEP_DAYS=14
+DATE_UPLOADS_KEEP_DAYS=7
 DATE_UPLOADS_MIN_BYTES=1024
 DATE_UPLOADS_VOLUME="docker_date_uploads"
 DATE_UPLOADS_FILE="${BACKUP_DIR}/date_uploads_${TIMESTAMP}.tar.gz"
@@ -75,7 +76,7 @@ fi
 
 # Backup /opt/docker/up-storage (tusd/up-api upload data, bind mount).
 # REV22-028: up-storage was not backed up — loss of the host directory = total data loss.
-UP_STORAGE_KEEP_DAYS=14
+UP_STORAGE_KEEP_DAYS=7
 UP_STORAGE_MIN_BYTES=1024
 UP_STORAGE_DIR="/opt/docker/up-storage"
 UP_STORAGE_FILE="${BACKUP_DIR}/up_storage_${TIMESTAMP}.tar.gz"
@@ -112,6 +113,12 @@ find "$BACKUP_DIR" -name "date_uploads_*.tar.gz" -mtime +"$DATE_UPLOADS_KEEP_DAY
 # Remove up_storage archives older than UP_STORAGE_KEEP_DAYS days
 echo "Removing up_storage archives older than ${UP_STORAGE_KEEP_DAYS} days..."
 find "$BACKUP_DIR" -name "up_storage_*.tar.gz" -mtime +"$UP_STORAGE_KEEP_DAYS" -delete -print
+
+# Pre-deploy snapshots written by the deploy scripts were never rotated and
+# accumulated indefinitely (2026-09-02). They go offsite like the rest, so the
+# host only needs the same KEEP_DAYS window.
+echo "Removing pre-deploy snapshots older than ${KEEP_DAYS} days..."
+find "$BACKUP_DIR" -maxdepth 1 \( -name "*_pre_deploy_*.sql.gz" -o -name "*_predeploy_*.sql.gz" -o -name "pre-deploy-*.sql.gz" \) -mtime +"$KEEP_DAYS" -delete -print
 
 echo ""
 echo "Done. Success: ${SUCCESS}, Failed: ${FAILED}"
